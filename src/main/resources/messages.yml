@@ -1,0 +1,134 @@
+# Messages Configuration
+# Color codes: & for legacy colors, MiniMessage format supported
+# Placeholders: {player}, {dungeon}, {party}, {time}, {amount}, etc.
+
+prefix: "&8[&6Dungeons&8]&r "
+
+# General messages
+general:
+  no-permission: "&cYou don't have permission to do that!"
+  player-only: "&cThis command can only be used by players!"
+  players-only: "&cThis command can only be used by players!"
+  reload-success: "&aConfiguration reloaded successfully!"
+  unknown-command: "&cUnknown command. Use /dungeon help for help."
+  player-not-found: "&cPlayer '{player}' not found!"
+
+# Party messages
+party:
+  created: "&aYou created a party!"
+  disbanded: "&cYour party has been disbanded."
+  already-in-party: "&cYou are already in a party!"
+  not-in-party: "&cYou are not in a party!"
+  not-leader: "&cOnly the party leader can do that!"
+  invited: "&aYou invited {player} to your party."
+  invite-sent: "&aYou invited {player} to your party."
+  invite-received: "&a{player} invited you to their party! &7/dngparty accept"
+  invite-expired: "&cParty invitation expired."
+  invite-declined: "&e{player} declined your party invitation."
+  invite-was-declined: "&e{player} declined your party invitation."
+  joined: "&aYou joined the party!"
+  player-joined: "&a{player} joined the party!"
+  left: "&eYou left the party."
+  player-left: "&e{player} left the party."
+  kicked: "&cYou were kicked from the party!"
+  you-were-kicked: "&cYou were kicked from the party!"
+  player-kicked: "&e{player} was kicked from the party."
+  full: "&cThe party is full!"
+  no-invite: "&cYou don't have any pending party invitations."
+  no-invitations: "&cYou don't have any pending party invitations."
+  already-invited: "&cThat player already has a pending invitation."
+  target-already-in-party: "&c{player} is already in a party!"
+  not-a-member: "&c{player} is not in your party!"
+  cannot-leave-in-dungeon: "&cYou cannot leave the party while in a dungeon!"
+  cannot-disband-in-dungeon: "&cYou cannot disband the party while in a dungeon!"
+  you-disbanded: "&cYou disbanded the party."
+  accept-failed: "&cFailed to accept the invitation."
+  list-header: "&6&lParty Members:"
+  list-entry: "&7- {player} {leader}"
+  leader-tag: "&6[Leader]"
+
+# Dungeon messages
+dungeon:
+  list-header: "&6&lAvailable Dungeons:"
+  list-entry: "&7- &e{dungeon} &8- &7{description}"
+  not-found: "&cDungeon '{dungeon}' not found!"
+  starting: "&aStarting dungeon {dungeon}..."
+  teleporting: "&aTeleporting in {time} seconds..."
+  teleport-cancelled: "&cTeleport cancelled!"
+  entered: "&aYou entered {dungeon}!"
+  completed: "&a&lDUNGEON COMPLETED!"
+  failed: "&c&lDUNGEON FAILED!"
+  left: "&eYou left the dungeon."
+  not-in-dungeon: "&cYou are not in a dungeon!"
+  already-in-dungeon: "&cYou are already in a dungeon!"
+  disabled: "&cThis dungeon is currently disabled!"
+  not-party-leader: "&cOnly the party leader can start a dungeon!"
+  party-member-in-dungeon: "&cA party member is already in a dungeon!"
+  party-in-dungeon: "&cYour party is already in a dungeon!"
+  party-too-small: "&cYour party is too small! Minimum: {min}"
+  party-too-large: "&cYour party is too large! Maximum: {max}"
+  on-cooldown: "&cYou must wait {time} before entering this dungeon again."
+  insufficient-funds: "&cYou need {cost} to enter this dungeon!"
+  entry-cost-charged: "&7You paid {cost} to enter the dungeon."
+  creation-failed: "&cFailed to create dungeon instance. Try again later."
+  joining: "&aStarting dungeon {dungeon}..."
+  time-expired: "&cTime's up! The dungeon has failed."
+  cooldown: "&cYou must wait {time} before entering this dungeon again."
+  entry-cost: "&cYou need {amount} to enter this dungeon!"
+  paid-entry: "&7You paid {amount} to enter the dungeon."
+  info-header: "&6&l{dungeon} Information:"
+  info-description: "&7{description}"
+  info-time-limit: "&7Time Limit: &e{time}"
+  info-party-size: "&7Party Size: &e{min}-{max}"
+  info-cooldown: "&7Cooldown: &e{cooldown}"
+  info-rewards: "&7Rewards: &e{rewards}"
+
+# Quest messages
+quest:
+  started: "&aQuest Started: &e{quest}"
+  completed: "&a&lQuest Completed: &e{quest}"
+  failed: "&cQuest Failed: &e{quest}"
+  progress: "&e{quest}: &7{current}/{total}"
+  objective-complete: "&a+ {objective}"
+  all-complete: "&a&lAll quests completed!"
+  required-incomplete: "&cYou must complete all required quests!"
+
+# Reward messages
+reward:
+  header: "&6&lRewards:"
+  item: "&7+ {amount}x {item}"
+  money: "&7+ ${amount}"
+  experience: "&7+ {amount} XP"
+  no-space: "&cYou don't have enough inventory space for rewards!"
+
+# Error messages
+error:
+  world-not-found: "&cDungeon world not found!"
+  schematic-not-found: "&cSchematic file '{file}' not found!"
+  schematic-load-failed: "&cFailed to load schematic '{file}'!"
+  no-available-slots: "&cNo available dungeon slots! Try again later."
+  database-error: "&cA database error occurred. Please contact an administrator."
+  party-too-small: "&cYour party is too small! Minimum: {min}"
+  party-too-large: "&cYour party is too large! Maximum: {max}"
+  player-offline: "&cPlayer '{player}' is not online!"
+  player-not-found: "&cPlayer '{player}' not found!"
+  dungeon-disabled: "&cThis dungeon is currently disabled!"
+
+# Admin messages
+admin:
+  reset-player: "&aReset data for player {player}."
+  reset-dungeon: "&aReset all instances of dungeon {dungeon}."
+  teleported: "&aTeleported to dungeon instance."
+  instance-list-header: "&6&lActive Dungeon Instances:"
+  instance-list-entry: "&7- {dungeon} &8@ &7{slot} &8- &7Party: {party}"
+  no-instances: "&7No active dungeon instances."
+  cleanup-success: "&aForce cleanup of all instances complete."
+
+# Scoreboard (shown during dungeon)
+scoreboard:
+  title: "&6&l{dungeon}"
+  time-left: "&7Time: &e{time}"
+  party-members: "&7Party: &e{count}"
+  quest-header: "&7Quests:"
+  quest-complete: "&a+ {quest}"
+  quest-incomplete: "&7- {quest} &8{progress}"

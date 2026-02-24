@@ -1,0 +1,197 @@
+# Reward Definitions
+# Rewards are assigned to dungeons in dungeons.yml
+
+rewards:
+  # Goblin Cave Rewards
+  goblin_cave_common:
+    # Chance this reward table is rolled (0-100)
+    chance: 100.0
+
+    # Items in this reward table
+    items:
+      - material: GOLD_INGOT
+        amount: 5-10
+        chance: 80.0
+
+      - material: IRON_SWORD
+        amount: 1
+        chance: 50.0
+        enchantments:
+          SHARPNESS: 2
+          UNBREAKING: 1
+
+      - material: COOKED_BEEF
+        amount: 16-32
+        chance: 60.0
+
+    # Money reward (requires Vault)
+    money: 100-250
+
+    # Experience points
+    experience: 500
+
+  goblin_cave_rare:
+    chance: 25.0
+    items:
+      - material: DIAMOND
+        amount: 1-3
+        chance: 100.0
+        name: "&bGoblin Diamond"
+        lore:
+          - "&7Stolen from the depths"
+          - "&7of the goblin cave"
+
+      - material: ENCHANTED_BOOK
+        amount: 1
+        chance: 40.0
+        stored-enchantments:
+          PROTECTION: 3
+
+    money: 500-1000
+    experience: 1000
+
+  goblin_bonus:
+    chance: 100.0
+    items:
+      - material: GOLDEN_APPLE
+        amount: 2-4
+        chance: 100.0
+
+    money: 200
+    experience: 250
+
+  # Undead Crypt Rewards
+  undead_crypt_rare:
+    chance: 75.0
+    items:
+      - material: DIAMOND_SWORD
+        amount: 1
+        chance: 60.0
+        name: "&5Crypt Blade"
+        lore:
+          - "&7Forged in darkness"
+          - "&7Sharpness IV"
+        enchantments:
+          SHARPNESS: 4
+          UNBREAKING: 3
+          LOOTING: 2
+
+      - material: DIAMOND_CHESTPLATE
+        amount: 1
+        chance: 40.0
+        name: "&5Crypt Armor"
+        enchantments:
+          PROTECTION: 3
+          UNBREAKING: 3
+
+    money: 1000-2000
+    experience: 2000
+
+  undead_crypt_epic:
+    chance: 15.0
+    items:
+      - material: NETHERITE_SWORD
+        amount: 1
+        chance: 100.0
+        name: "&6&lLich King's Blade"
+        lore:
+          - "&5Legendary Weapon"
+          - "&7Infused with dark magic"
+          - ""
+          - "&dSharpness V"
+          - "&dUnbreaking III"
+          - "&dLooting III"
+        enchantments:
+          SHARPNESS: 5
+          UNBREAKING: 3
+          LOOTING: 3
+          FIRE_ASPECT: 2
+
+      - material: TOTEM_OF_UNDYING
+        amount: 1
+        chance: 50.0
+
+    money: 5000-10000
+    experience: 5000
+
+  # Ice Temple Rewards
+  ice_temple_common:
+    chance: 100.0
+    items:
+      - material: DIAMOND
+        amount: 2-5
+        chance: 70.0
+
+      - material: PRISMARINE_SHARD
+        amount: 10-20
+        chance: 80.0
+        name: "&bFrost Shard"
+
+      - material: ENCHANTED_BOOK
+        amount: 1
+        chance: 50.0
+        stored-enchantments:
+          FROST_WALKER: 2
+
+    money: 300-600
+    experience: 1000
+
+  ice_temple_rare:
+    chance: 35.0
+    items:
+      - material: TRIDENT
+        amount: 1
+        chance: 30.0
+        name: "&bFrost Trident"
+        lore:
+          - "&7Blessed by ice magic"
+        enchantments:
+          LOYALTY: 3
+          IMPALING: 4
+          UNBREAKING: 3
+
+      - material: ICE
+        amount: 64
+        chance: 100.0
+
+    money: 1500-3000
+    experience: 3000
+
+  ice_bonus:
+    chance: 100.0
+    items:
+      - material: DIAMOND
+        amount: 3
+        chance: 100.0
+
+    money: 500
+    experience: 500
+
+  # Example: Command rewards
+  example_command_reward:
+    chance: 100.0
+    items:
+      - material: DIAMOND
+        amount: 5
+        chance: 100.0
+
+    # Commands to execute for each player (%player% = player name)
+    commands:
+      - "give %player% minecraft:diamond 5"
+      - "effect give %player% minecraft:regeneration 60 1"
+
+    money: 1000
+    experience: 2000
+
+  # Example: Custom head reward
+  example_head_reward:
+    chance: 50.0
+    items:
+      - material: PLAYER_HEAD
+        amount: 1
+        chance: 100.0
+        name: "&6Trophy Head"
+        lore:
+          - "&7A rare trophy"
+        # Base64 texture value for custom head
+        skull-texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvIn19fQ=="

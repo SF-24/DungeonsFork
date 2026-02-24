@@ -1,0 +1,171 @@
+# Undead Crypt Dungeon Configuration
+
+# Unique identifier for this dungeon
+id: "undead_crypt"
+
+# Display name shown to players
+display-name: "&cUndead Crypt"
+
+# Schematic file name (must exist in plugins/Dungeons/schematics/)
+schematic-file: "undead_crypt.schem"
+
+# Party size requirements
+party-size:
+  min: 3
+  max: 5
+
+# Time limit in seconds (45 minutes)
+time-limit: 2700
+
+# Spawn point offset from schematic paste location
+spawn-offset:
+  x: 25.5
+  y: 2.0
+  z: 25.5
+
+# Quest IDs that this dungeon uses
+quests:
+  - "undead_purge"
+  - "lich_slayer"
+  - "holy_ritual"
+
+# Reward table IDs to use on completion
+rewards:
+  - "undead_loot"
+  - "rare_rewards"
+
+# Cooldown in seconds before players can re-run (2 hours)
+cooldown: 7200
+
+# Description shown in /dungeon info
+description:
+  - "&7An ancient crypt filled with the undead."
+  - "&7Defeat the lich king and purify the crypt!"
+  - ""
+  - "&eObjectives:"
+  - "&7- Defeat 30 undead enemies"
+  - "&7- Slay the Lich King boss"
+  - "&7- Perform the holy ritual"
+
+# Difficulty level
+difficulty: "HARD"
+
+# Entry cost
+entry-cost: 100.0
+
+# Permission required to enter
+permission: "dungeons.enter.undead_crypt"
+
+# Whether this dungeon is enabled
+enabled: true
+
+# Icon for GUI menus
+icon:
+  material: "SKELETON_SKULL"
+  custom-model-data: 0
+
+# Triggers for the Undead Crypt
+triggers:
+
+  # Skeleton archers when entering corridor
+  skeleton_corridor:
+    type: LOCATION
+    condition:
+      x: 30.0
+      y: 5.0
+      z: 20.0
+      radius: 4.0
+    actions:
+      - type: SPAWN_MOB
+        mob-type: SKELETON
+        count: 6
+        x: 30.0
+        y: 5.0
+        z: 25.0
+      - type: MESSAGE
+        message: "&c&lSkeleton Archers! &7Watch out for arrows!"
+    repeatable: false
+    cooldown: 0
+
+  # Lich King boss fight
+  lich_throne:
+    type: LOCATION
+    condition:
+      x: 60.0
+      y: 10.0
+      z: 60.0
+      radius: 10.0
+    actions:
+      - type: SPAWN_MOB
+        mob-type: WITHER_SKELETON
+        count: 1
+        x: 60.0
+        y: 10.0
+        z: 60.0
+      - type: SPAWN_MOB
+        mob-type: ZOMBIE
+        count: 4
+        x: 58.0
+        y: 10.0
+        z: 58.0
+      - type: MESSAGE
+        message: "&4&l&nTHE LICH KING AWAKENS!"
+      - type: COMMAND
+        command: "title @a title {\"text\":\"BOSS FIGHT\",\"color\":\"dark_red\",\"bold\":true}"
+      - type: COMMAND
+        command: "playsound minecraft:entity.wither.spawn master @a"
+    repeatable: false
+    cooldown: 0
+
+  # Poison gas trap
+  poison_trap:
+    type: LOCATION
+    condition:
+      x: 40.0
+      y: 5.0
+      z: 35.0
+      radius: 5.0
+    actions:
+      - type: DAMAGE_PLAYER
+        damage: 6
+      - type: MESSAGE
+        message: "&2&lPOISON GAS! &7You feel your life draining..."
+      - type: COMMAND
+        command: "effect give @a poison 5 1"
+    repeatable: true
+    cooldown: 15
+
+  # Zombie horde spawn after 10 minutes
+  zombie_horde:
+    type: TIMER
+    condition:
+      time: 600  # 10 minutes
+    actions:
+      - type: SPAWN_MOB
+        mob-type: ZOMBIE
+        count: 10
+        x: 25.0
+        y: 2.0
+        z: 25.0
+      - type: MESSAGE
+        message: "&4&lZOMBIE HORDE! &7The undead are rising from their graves!"
+    repeatable: false
+    cooldown: 0
+
+  # Curse altar (damages all players)
+  curse_altar:
+    type: LOCATION
+    condition:
+      x: 50.0
+      y: 5.0
+      z: 40.0
+      radius: 3.0
+    actions:
+      - type: DAMAGE_PLAYER
+        damage: 8
+      - type: MESSAGE
+        message: "&5&lCURSED ALTAR! &7Dark magic tears at your soul!"
+      - type: COMMAND
+        command: "effect give @a wither 3 1"
+    repeatable: false
+    cooldown: 0

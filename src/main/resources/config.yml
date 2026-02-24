@@ -1,0 +1,180 @@
+# Dungeons Plugin Configuration
+
+# Grid system settings
+grid:
+  # Grid mode: "auto" or "manual"
+  # auto: Creates a separate void world automatically (recommended)
+  # manual: Uses an existing world with custom coordinates
+  mode: "auto"
+
+  # Auto mode settings (used when mode = "auto")
+  auto:
+    # Name of the separate world to create
+    world-name: "dungeon_world"
+
+  # Manual mode settings (used when mode = "manual")
+  manual:
+    # Use an existing world (e.g., "world", "world_nether", custom world)
+    world-name: "world"
+
+    # Grid start coordinates (where the first dungeon slot begins)
+    # Choose a location far from spawn to avoid interference
+    start-x: 10000
+    start-z: 10000
+
+  # Common settings (used in both modes)
+  # Size of each dungeon slot in blocks (should be larger than largest dungeon)
+  slot-size: 256
+
+  # Padding between dungeon slots in blocks
+  # Recommended: 50-100 blocks to prevent visibility between instances
+  padding: 100
+
+  # Base Y level where dungeons are generated
+  base-y-level: 100
+
+  # Maximum number of concurrent dungeon instances
+  max-slots: 100
+
+# Party system settings
+party:
+  # Minimum party size to start dungeons
+  min-size: 1
+
+  # Maximum party size
+  max-size: 5
+
+  # Allow friendly fire between party members
+  friendly-fire: false
+
+  # Share rewards equally among party members
+  share-rewards: true
+
+  # Party invitations expire after X seconds
+  invite-timeout: 60
+
+# Dungeon instance settings
+instance:
+  # Maximum duration for a dungeon in seconds (30 minutes)
+  max-duration: 1800
+
+  # Cooldown per player in seconds (1 hour)
+  cooldown-per-player: 3600
+
+  # Countdown before teleporting to dungeon
+  teleport-countdown: 5
+
+  # Teleport players back to spawn on completion
+  teleport-to-spawn: true
+
+  # Keep inventory on death in dungeon
+  keep-inventory: false
+
+  # Respawn in dungeon or kick on death
+  respawn-in-dungeon: true
+
+  # Maximum deaths before kick (0 = unlimited)
+  max-deaths: 0
+
+  # Post-dungeon wait period (after successful completion)
+  post-completion:
+    # Enable wait period after completion
+    enabled: true
+
+    # Duration in seconds (-1 = unlimited, wait until leader leaves)
+    # Set to 0 to cleanup immediately
+    duration: 30
+
+    # Kill all mobs when dungeon completes
+    kill-mobs: true
+
+  # Return point configuration
+  # Players will be teleported here when dungeon ends (completion, failure, or leave)
+  return-point:
+    # World to teleport to
+    world: "world"
+
+    # Coordinates
+    x: 0.5
+    y: 64.0
+    z: 0.5
+
+# Database settings
+database:
+  # Database type: sqlite or mysql
+  type: sqlite
+
+  # SQLite settings (only used if type is sqlite)
+  sqlite:
+    file: "data.db"
+
+  # MySQL settings (only used if type is mysql)
+  mysql:
+    host: "localhost"
+    port: 3306
+    database: "dungeons"
+    username: "root"
+    password: "password"
+    pool-size: 10
+
+# Economy settings (requires Vault)
+economy:
+  # Enable economy integration
+  enabled: true
+
+  # Entry cost per dungeon (can be overridden per dungeon)
+  default-entry-cost: 0
+
+# WorldGuard integration (requires WorldGuard)
+worldguard:
+  # Enable WorldGuard region protection for dungeon instances
+  enabled: true
+
+  # Region flags to apply to dungeon instances
+  flags:
+    # Allow/deny block breaking (false = deny)
+    block-break: false
+
+    # Allow/deny block placing (false = deny)
+    block-place: false
+
+    # Allow/deny TNT and other explosions (false = deny)
+    explosion: false
+
+    # Allow/deny fire spreading (false = deny)
+    fire-spread: false
+
+    # Allow/deny lava creating fire (false = deny)
+    lava-fire: false
+
+    # Allow/deny using flint and steel (false = deny)
+    lighter: false
+
+    # Allow/deny PVP combat (true = allow)
+    pvp: true
+
+    # Allow/deny mob damage to players (true = allow)
+    mob-damage: true
+
+    # Allow/deny mob spawning (true = allow)
+    mob-spawning: true
+
+    # Allow/deny creeper explosions (false = deny)
+    creeper-explosion: false
+
+    # Allow/deny ghast fireball damage (false = deny)
+    ghast-fireball: false
+
+# Performance settings
+performance:
+  # Auto-save interval in ticks (20 ticks = 1 second)
+  auto-save-interval: 6000
+
+  # Clean up empty chunks in dungeon world
+  cleanup-chunks: true
+
+  # Cleanup interval in ticks
+  cleanup-interval: 12000
+
+# Debug mode
+debug: false

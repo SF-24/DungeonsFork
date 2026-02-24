@@ -1,0 +1,265 @@
+# Goblin Cave Dungeon Configuration
+
+# Unique identifier for this dungeon
+id: "goblin_cave"
+
+# Display name shown to players
+display-name: "&aGoblin Cave"
+
+# Schematic file name (must exist in plugins/Dungeons/schematics/)
+schematic-file: "goblin_cave.schem"
+
+# Party size requirements
+party-size:
+  min: 2
+  max: 4
+
+# Time limit in seconds (30 minutes)
+# Set to 0 or negative to disable time limit
+# Completion time will still be tracked for statistics
+time-limit: 1800
+
+# Spawn point offset from schematic paste location
+# This is where players will be teleported when entering
+spawn-offset:
+  x: 25.5  # Center of a 50x50 platform
+  y: 1.0   # One block above floor
+  z: 25.5
+
+# Quest IDs that this dungeon uses
+quests:
+  - "goblin_slayer"
+  - "treasure_hunter"
+  - "escape_route"
+
+# Reward table IDs to use on completion
+rewards:
+  - "goblin_loot"
+  - "common_rewards"
+
+# Cooldown in seconds before players can re-run (1 hour)
+cooldown: 3600
+
+# Description shown in /dungeon info
+description:
+  - "&7A dark cave infested with goblins."
+  - "&7Clear the cave and find the treasure!"
+  - ""
+  - "&eObjectives:"
+  - "&7- Defeat 20 goblins"
+  - "&7- Find the hidden treasure"
+  - "&7- Locate the escape route"
+
+# Difficulty level
+difficulty: "MEDIUM"
+
+# Entry cost (0 = free)
+entry-cost: 0
+
+# Permission required to enter
+permission: "dungeons.enter.goblin_cave"
+
+# Whether this dungeon is enabled
+enabled: true
+
+# Icon for GUI menus
+icon:
+  material: "STONE_PICKAXE"
+  custom-model-data: 0
+
+# Custom mobs - define custom mob configurations
+custom-mobs:
+
+  # Goblin Warrior - strong melee fighter
+  goblin_warrior:
+    type: ZOMBIE
+    name: "&2&lGoblin Warrior"
+    show-name: true
+    health: 40.0
+    damage: 8.0
+    speed: 0.28
+    equipment:
+      helmet:
+        material: LEATHER_HELMET
+        drop-chance: 0.05
+        enchantments:
+          protection: 2
+      chestplate:
+        material: LEATHER_CHESTPLATE
+        drop-chance: 0.05
+        enchantments:
+          protection: 2
+      main-hand:
+        material: STONE_SWORD
+        drop-chance: 0.1
+        enchantments:
+          sharpness: 2
+
+  # Goblin Archer - ranged attacker
+  goblin_archer:
+    type: SKELETON
+    name: "&a&lGoblin Archer"
+    show-name: true
+    health: 25.0
+    equipment:
+      helmet:
+        material: LEATHER_HELMET
+        drop-chance: 0.05
+      main-hand:
+        material: BOW
+        drop-chance: 0.15
+        enchantments:
+          power: 2
+
+  # Goblin King - boss mob
+  goblin_king:
+    type: ZOMBIE
+    name: "&6&l&nGOBLIN KING"
+    show-name: true
+    health: 150.0
+    damage: 12.0
+    speed: 0.32
+    potion-effects:
+      strength:
+        duration: 999999  # Permanent (in seconds)
+        amplifier: 1      # Level 2 (Strength II)
+      regeneration:
+        duration: 999999
+        amplifier: 0      # Level 1 (Regeneration I)
+    equipment:
+      helmet:
+        material: GOLDEN_HELMET
+        drop-chance: 1.0
+        enchantments:
+          protection: 3
+          thorns: 2
+      chestplate:
+        material: GOLDEN_CHESTPLATE
+        drop-chance: 1.0
+        enchantments:
+          protection: 3
+      leggings:
+        material: GOLDEN_LEGGINGS
+        drop-chance: 1.0
+        enchantments:
+          protection: 3
+      boots:
+        material: GOLDEN_BOOTS
+        drop-chance: 1.0
+        enchantments:
+          protection: 3
+      main-hand:
+        material: GOLDEN_SWORD
+        drop-chance: 1.0
+        enchantments:
+          sharpness: 4
+          fire_aspect: 2
+
+# Triggers - events that execute actions when conditions are met
+# Coordinates are relative to the dungeon spawn point (schematic paste location)
+triggers:
+
+  # Ambush when players enter the main chamber
+  ambush_chamber:
+    type: LOCATION
+    condition:
+      x: 35.0      # Relative to dungeon origin
+      y: 5.0
+      z: 25.0
+      radius: 5.0  # Trigger when within 5 blocks
+    actions:
+      - type: SPAWN_MOB
+        mob-type: ZOMBIE
+        count: 4
+        x: 35.0
+        y: 5.0
+        z: 25.0
+      - type: MESSAGE
+        message: "&c&lAMBUSH! &7Goblins are attacking from the shadows!"
+    repeatable: false
+    cooldown: 0
+
+  # Boss arena trigger
+  boss_arena:
+    type: LOCATION
+    condition:
+      x: 50.0
+      y: 5.0
+      z: 50.0
+      radius: 8.0
+    actions:
+      - type: SPAWN_MOB
+        custom-mob-id: goblin_king
+        count: 1
+        x: 50.0
+        y: 5.0
+        z: 50.0
+      - type: SPAWN_MOB
+        custom-mob-id: goblin_warrior
+        count: 3
+        x: 48.0
+        y: 5.0
+        z: 48.0
+      - type: MESSAGE
+        message: "&4&lBOSS FIGHT! &7The Goblin King has appeared!"
+      - type: COMMAND
+        command: "playsound minecraft:entity.ender_dragon.growl master @a"
+    repeatable: false
+    cooldown: 0
+
+  # Trap that damages players
+  spike_trap:
+    type: LOCATION
+    condition:
+      x: 20.0
+      y: 3.0
+      z: 30.0
+      radius: 3.0
+    actions:
+      - type: DAMAGE_PLAYER
+        damage: 4
+      - type: POTION_EFFECT
+        effect: POISON
+        duration: 10   # 10 seconds
+        amplifier: 1   # Level 2 (Poison II)
+      - type: MESSAGE
+        message: "&c&lOUCH! &7You triggered a spike trap!"
+    repeatable: true
+    cooldown: 10  # Can be triggered again after 10 seconds
+
+  # Timer warning at 5 minutes
+  time_warning:
+    type: TIMER
+    condition:
+      time: 300  # After 5 minutes (300 seconds)
+    actions:
+      - type: MESSAGE
+        message: "&e&lWARNING: &725 minutes remaining!"
+    repeatable: false
+    cooldown: 0
+
+  # Treasure room reward
+  treasure_room:
+    type: LOCATION
+    condition:
+      x: 45.0
+      y: 4.0
+      z: 15.0
+      radius: 4.0
+    actions:
+      - type: DROP_ITEM
+        material: "GOLD_INGOT"
+        amount: 5
+        x: 45.0
+        y: 4.5
+        z: 15.0
+      - type: DROP_ITEM
+        material: "DIAMOND"
+        amount: 2
+        x: 45.5
+        y: 4.5
+        z: 15.5
+      - type: MESSAGE
+        message: "&6&lTREASURE FOUND! &7You discovered the goblin's hoard!"
+    repeatable: false
+    cooldown: 0

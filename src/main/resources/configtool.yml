@@ -1,0 +1,9 @@
+plugin: "Dungeons.v1 - BL"
+author: Lolek
+configs:
+  - path: config.yml
+    label: "Main Config"
+  - path: messages.yml
+    label: "Messages"
+  - path: stats.yml
+    label: "Statistics"

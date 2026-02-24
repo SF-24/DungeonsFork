@@ -1,0 +1,146 @@
+# Quest Definitions
+# Quests are assigned to dungeons in dungeons.yml
+
+quests:
+  # Goblin Cave Quests
+  goblin_cave_main:
+    name: "Clear the Cave"
+    description: "Defeat all goblins in the cave"
+    type: KILL_MOBS
+
+    # List of objectives for this quest
+    objectives:
+      - mob: ZOMBIE
+        amount: 20
+        display-name: "&aGoblin Warrior"
+
+      - mob: HUSK
+        amount: 10
+        display-name: "&aGoblin Brute"
+
+    # Whether this quest is required to complete the dungeon
+    required: true
+
+    # Track progress in scoreboard/action bar
+    show-progress: true
+
+  goblin_cave_bonus:
+    name: "Treasure Hunter"
+    description: "Collect goblin treasure"
+    type: COLLECT_ITEMS
+    objectives:
+      - material: GOLD_NUGGET
+        amount: 5
+        display-name: "&6Goblin Gold"
+
+    required: false
+    show-progress: true
+
+    # Bonus reward table if completed (from rewards.yml)
+    bonus-reward: goblin_bonus
+
+  # Undead Crypt Quests
+  undead_crypt_main:
+    name: "Purge the Undead"
+    description: "Clear the crypt of undead creatures"
+    type: KILL_MOBS
+    objectives:
+      - mob: SKELETON
+        amount: 25
+        display-name: "&7Skeleton Warrior"
+
+      - mob: ZOMBIE
+        amount: 20
+        display-name: "&2Rotting Corpse"
+
+      - mob: WITHER_SKELETON
+        amount: 10
+        display-name: "&8Crypt Guardian"
+
+    required: true
+    show-progress: true
+
+  undead_crypt_boss:
+    name: "Defeat the Lich King"
+    description: "Slay the master of the crypt"
+    type: KILL_BOSS
+    objectives:
+      # Boss identifier (custom named mob)
+      - boss-id: "lich_king"
+        amount: 1
+        display-name: "&5&lLich King"
+
+    required: true
+    show-progress: true
+
+  # Ice Temple Quests
+  ice_temple_main:
+    name: "Temple Guardians"
+    description: "Defeat the ice temple guardians"
+    type: KILL_MOBS
+    objectives:
+      - mob: STRAY
+        amount: 15
+        display-name: "&bIce Archer"
+
+      - mob: POLAR_BEAR
+        amount: 8
+        display-name: "&fFrost Bear"
+
+    required: true
+    show-progress: true
+
+  ice_temple_collect:
+    name: "Frost Crystals"
+    description: "Collect magical frost crystals"
+    type: COLLECT_ITEMS
+    objectives:
+      - material: PRISMARINE_CRYSTALS
+        amount: 10
+        display-name: "&bFrost Crystal"
+
+    required: false
+    show-progress: true
+    bonus-reward: ice_bonus
+
+  # Example: Location-based quest
+  example_location_quest:
+    name: "Explore the Depths"
+    description: "Reach the dungeon's heart"
+    type: REACH_LOCATION
+    objectives:
+      # Relative coordinates within the dungeon schematic
+      - x: 50
+        y: 10
+        z: 50
+        radius: 5
+        display-name: "&6Dungeon Heart"
+
+    required: true
+    show-progress: true
+
+  # Example: Survival quest
+  example_survival_quest:
+    name: "Hold the Line"
+    description: "Survive the onslaught"
+    type: SURVIVE_TIME
+    objectives:
+      # Duration in seconds
+      - duration: 300
+        display-name: "&cSurvive 5 minutes"
+
+    required: true
+    show-progress: true
+
+  # Example: Interact quest
+  example_interact_quest:
+    name: "Ancient Artifacts"
+    description: "Activate the ancient artifacts"
+    type: INTERACT_BLOCKS
+    objectives:
+      - material: LEVER
+        amount: 5
+        display-name: "&eAncient Lever"
+
+    required: false
+    show-progress: true

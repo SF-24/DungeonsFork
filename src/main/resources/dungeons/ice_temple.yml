@@ -1,0 +1,66 @@
+# Ice Temple Dungeon Configuration
+
+# Unique identifier for this dungeon
+id: "ice_temple"
+
+# Display name shown to players
+display-name: "&bIce Temple"
+
+# Schematic file name (must exist in plugins/Dungeons/schematics/)
+schematic-file: "ice_temple.schem"
+
+# Party size requirements
+party-size:
+  min: 4
+  max: 5
+
+# Time limit in seconds (60 minutes)
+time-limit: 3600
+
+# Spawn point offset from schematic paste location
+spawn-offset:
+  x: 25.5
+  y: 1.0
+  z: 25.5
+
+# Quest IDs that this dungeon uses
+quests:
+  - "frozen_enemies"
+  - "ice_shards"
+  - "frost_titan"
+
+# Reward table IDs to use on completion
+rewards:
+  - "ice_loot"
+  - "epic_rewards"
+  - "bonus_crystals"
+
+# Cooldown in seconds before players can re-run (4 hours)
+cooldown: 14400
+
+# Description shown in /dungeon info
+description:
+  - "&7A frozen temple guarded by ice elementals."
+  - "&7Brave the cold and defeat the Frost Titan!"
+  - ""
+  - "&eObjectives:"
+  - "&7- Defeat 25 frozen enemies"
+  - "&7- Collect 10 ice shards"
+  - "&7- Defeat the Frost Titan boss"
+
+# Difficulty level
+difficulty: "EXTREME"
+
+# Entry cost
+entry-cost: 250.0
+
+# Permission required to enter
+permission: "dungeons.enter.ice_temple"
+
+# Whether this dungeon is enabled
+enabled: true
+
+# Icon for GUI menus
+icon:
+  material: "PACKED_ICE"
+  custom-model-data: 0

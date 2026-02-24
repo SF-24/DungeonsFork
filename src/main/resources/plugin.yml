@@ -1,0 +1,63 @@
+name: Dungeons
+version: "1"
+main: dev.bekololek.dungeons.Main
+api-version: "1.19"
+author: Lolek
+description: "Grid-based multiplayer dungeon system with party management, quests, triggers, and rewards"
+depend: [VersionAdapter]
+softdepend: [Vault, WorldEdit, WorldGuard, PlaceholderAPI]
+
+commands:
+  dungeon:
+    description: "Dungeon player commands"
+    aliases: [d, dung]
+    permission: dungeons.enter
+  dngparty:
+    description: "Party management commands"
+    aliases: [party, p]
+    permission: dungeons.party
+  dngadmin:
+    description: "Dungeon admin commands"
+    aliases: [da]
+    permission: dungeons.admin
+  dng:
+    description: "Dungeon editor commands"
+    permission: dungeons.editor
+
+permissions:
+  dungeons.party:
+    description: "Use party commands"
+    default: true
+  dungeons.enter:
+    description: "Enter any dungeon"
+    default: true
+  dungeons.editor:
+    description: "Use in-game dungeon editor"
+    default: op
+  dungeons.admin:
+    description: "Admin commands"
+    default: op
+  dungeons.admin.reload:
+    description: "Reload configuration"
+    default: op
+  dungeons.admin.reset:
+    description: "Reset player/dungeon data"
+    default: op
+  dungeons.admin.teleport:
+    description: "Teleport to instances"
+    default: op
+  dungeons.bypass.cooldown:
+    description: "Bypass dungeon cooldowns"
+    default: op
+  dungeons.bypass.party-size:
+    description: "Bypass party size requirements"
+    default: op
+  dungeons.bypass.time-limit:
+    description: "Ignore time limits"
+    default: op
+  dungeons.stats:
+    description: "View own stats"
+    default: true
+  dungeons.stats.others:
+    description: "View other players' stats"
+    default: op
