@@ -5,7 +5,7 @@ api-version: "1.19"
 author: Lolek
 description: "Grid-based multiplayer dungeon system with party management, quests, triggers, and rewards"
 depend: [VersionAdapter]
-softdepend: [Vault, WorldEdit, WorldGuard, PlaceholderAPI]
+softdepend: [Vault, WorldEdit, WorldGuard, PlaceholderAPI, MythicMobs, BetonQuest ]
 
 commands:
   dungeon:
