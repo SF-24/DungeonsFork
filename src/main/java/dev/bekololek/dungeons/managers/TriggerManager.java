@@ -5,7 +5,9 @@ import dev.bekololek.dungeons.models.CustomMob;
 import dev.bekololek.dungeons.models.DungeonInstance;
 import dev.bekololek.dungeons.models.QuestProgress;
 import dev.bekololek.dungeons.models.Trigger;
+import dev.bekololek.dungeons.utils.ClickType;
 import org.bukkit.*;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -30,6 +32,20 @@ public class TriggerManager {
             if (!instance.canTriggerFire(trigger)) continue;
 
             if (trigger.getCondition().isLocationInRange(playerLocation, instance.getSpawnLocation())) {
+                executeTrigger(instance, trigger, player);
+            }
+        }
+    }
+
+    public void checkBlockInteractTriggers(DungeonInstance instance, Player player, Location interactLocation, ClickType clickType) {
+        if (!instance.isActive()) return;
+
+        for (Trigger trigger : instance.getDungeon().getTriggers()) {
+            if (trigger.getType() != Trigger.TriggerType.BLOCK_INTERACT) continue;
+            if (!instance.canTriggerFire(trigger)) continue;
+            if(clickType != trigger.getCondition().getClickType()) continue;
+
+            if (trigger.getCondition().isExactLocation(interactLocation, instance.getSpawnLocation())) {
                 executeTrigger(instance, trigger, player);
             }
         }
@@ -106,6 +122,13 @@ public class TriggerManager {
             case SPAWN_MOB:
                 spawnMob(instance, action, world);
                 break;
+            case SPAWN_MYTHIC_MOB:
+                if(plugin.getMythicMobsIntegration().isEnabled()) {
+                    spawnMythicMob(instance, action, world);
+                } else {
+                    System.out.println("Mythic Mobs integration has not been enabled.");
+                }
+                break;
             case DROP_ITEM:
                 dropItem(instance, action, world);
                 break;
@@ -122,6 +145,28 @@ public class TriggerManager {
                 applyPotionEffect(instance, action, triggeringPlayer);
                 break;
         }
+    }
+
+    private void spawnMythicMob(DungeonInstance instance, String customMobId, int count, int level, Location baseLocation) {
+        String dungeonId = instance.getDungeon().getId();
+
+        if (!plugin.getMythicMobsIntegration().mythicMobExists(customMobId)) {
+            plugin.getLogger().warning("Mythic mob not found: " + customMobId + " for dungeon " + dungeonId);
+            return;
+        }
+
+        for (int i = 0; i < count; i++) {
+            Location mobLocation = baseLocation.clone().add(
+                    (Math.random() - 0.5) * 2,
+                    0,
+                    (Math.random() - 0.5) * 2
+            );
+
+            Entity mythicMob = plugin.getMythicMobsIntegration().spawnAndGetMythicMob(customMobId,level,mobLocation);
+            instance.addSpawnedMob(mythicMob.getUniqueId());
+        }
+
+        plugin.getLogger().info("Spawned " + count + " mythic mob '" + customMobId + "' at " + baseLocation);
     }
 
     private void spawnMob(DungeonInstance instance, Trigger.TriggerAction action, World world) {
@@ -160,6 +205,23 @@ public class TriggerManager {
         plugin.getLogger().info("Spawned " + count + " " + mobType + " at " + spawnLocation);
     }
 
+    private void spawnMythicMob(DungeonInstance instance, Trigger.TriggerAction action, World world) {
+        int count = action.getMobCount();
+
+        Location dungeonOrigin = instance.getSpawnLocation();
+        double spawnX = dungeonOrigin.getX() + action.getSpawnX();
+        double spawnY = dungeonOrigin.getY() + action.getSpawnY();
+        double spawnZ = dungeonOrigin.getZ() + action.getSpawnZ();
+
+        Location spawnLocation = new Location(world, spawnX, spawnY, spawnZ);
+
+        String customMobId = action.getCustomMobId();
+        if (customMobId != null) {
+            spawnMythicMob(instance, customMobId, count, 0, spawnLocation);
+            return;
+        }
+    }
+
     private void spawnCustomMob(DungeonInstance instance, String customMobId, int count, Location baseLocation) {
         String dungeonId = instance.getDungeon().getId();
         CustomMob customMob = plugin.getCustomMobManager().getCustomMob(dungeonId, customMobId);
@@ -183,6 +245,7 @@ public class TriggerManager {
 
         plugin.getLogger().info("Spawned " + count + " custom mob '" + customMobId + "' at " + baseLocation);
     }
+
 
     private void dropItem(DungeonInstance instance, Trigger.TriggerAction action, World world) {
         String materialName = action.getItemMaterial();

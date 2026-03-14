@@ -6,7 +6,7 @@
 
     <groupId>dev.bekololek</groupId>
     <artifactId>dungeons</artifactId>
-    <version>1</version>
+    <version>1.1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <properties>
@@ -36,6 +36,24 @@
             <id>enginehub</id>
             <url>https://maven.enginehub.org/repo/</url>
         </repository>
+        <repository>
+            <id>betonquest-betonquest</id>
+            <name>BetonQuest</name>
+            <url>https://repo.betonquest.org/betonquest</url>
+        </repository>
+        <repository>
+            <id>nexus</id>
+            <name>Lumine Releases</name>
+            <url>https://mvn.lumine.io/repository/maven-public/</url>
+        </repository>
+        <repository>
+            <id>minebench-snapshots</id>
+            <url>https://repo.minebench.de</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+
     </repositories>
 
     <dependencies>
@@ -49,7 +67,7 @@
 
         <!-- VersionAdapter (hard depend) -->
         <dependency>
-            <groupId>dev.bekololek</groupId>
+            <groupId>com.terranova</groupId>
             <artifactId>versionadapter</artifactId>
             <version>1.0.0</version>
             <scope>provided</scope>
@@ -94,10 +112,32 @@
             <version>5.1.0</version>
             <scope>compile</scope>
         </dependency>
+
+        <dependency>
+            <groupId>io.lumine</groupId>
+            <artifactId>Mythic-Dist</artifactId>
+            <version>5.11.2</version>
+            <scope>provided</scope>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.betonquest</groupId>
+            <artifactId>betonquest</artifactId>
+            <version>3.0.0-SNAPSHOT</version>
+            <scope>provided</scope>
+            <optional>true</optional>
+        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.mineshaft</groupId>-->
+<!--            <artifactId>mineshaft-api</artifactId>-->
+<!--            <version>1.2.0-SNAPSHOT</version>-->
+<!--            <scope>provided</scope>-->
+<!--            <optional>true</optional>-->
+<!--        </dependency>-->
     </dependencies>
 
     <build>
-        <finalName>Dungeons.v1-BL</finalName>
+        <finalName>dungeons-bl-${version}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

@@ -3,6 +3,7 @@ package dev.bekololek.dungeons.managers;
 import dev.bekololek.dungeons.Main;
 import dev.bekololek.dungeons.models.Dungeon;
 import dev.bekololek.dungeons.models.Trigger;
+import dev.bekololek.dungeons.utils.ClickType;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Registry;
@@ -138,6 +139,20 @@ public class DungeonManager {
                             double radius = conditionSection.getDouble("radius", 3.0);
                             builder.location(x, y, z, radius);
                             break;
+                        case BLOCK_INTERACT:
+                            double ix = conditionSection.getDouble("x");
+                            double iy = conditionSection.getDouble("y");
+                            double iz = conditionSection.getDouble("z");
+                            try {
+                                if(conditionSection.getString("click-type")==null) {
+                                    break;
+                                }
+                                ClickType clickType = ClickType.valueOf(conditionSection.getString("click-type").toUpperCase(Locale.ROOT));
+                                builder.interact(ix,iy,iz,clickType);
+                            }  catch(Exception ignored) {
+                                break;
+                            }
+                            break;
                         case TIMER:
                             int time = conditionSection.getInt("time");
                             builder.timer(time);
@@ -210,6 +225,16 @@ public class DungeonManager {
                     org.bukkit.entity.EntityType mobType = org.bukkit.entity.EntityType.valueOf(mobTypeStr.toUpperCase());
                     return Trigger.TriggerAction.spawnMob(mobType, mobCount, mobX, mobY, mobZ);
 
+                case SPAWN_MYTHIC_MOB:
+                    int mobCount_ = ((Number) actionMap.getOrDefault("count", 1)).intValue();
+                    double mobX_ = ((Number) actionMap.getOrDefault("x", 0.0)).doubleValue();
+                    double mobY_ = ((Number) actionMap.getOrDefault("y", 0.0)).doubleValue();
+                    double mobZ_ = ((Number) actionMap.getOrDefault("z", 0.0)).doubleValue();
+
+                    String customMobId_ = (String) actionMap.get("custom-mob-id");
+                    if (customMobId_ != null) {
+                        return Trigger.TriggerAction.spawnMythicMob(customMobId_, mobCount_, mobX_, mobY_, mobZ_);
+                    }
                 case DROP_ITEM:
                     String material = (String) actionMap.get("material");
                     int itemAmount = ((Number) actionMap.getOrDefault("amount", 1)).intValue();
@@ -284,6 +309,12 @@ public class DungeonManager {
                             config.set(basePath + ".condition.y", condition.getY());
                             config.set(basePath + ".condition.z", condition.getZ());
                             config.set(basePath + ".condition.radius", condition.getRadius());
+                            break;
+                        case BLOCK_INTERACT:
+                            config.set(basePath + ".condition.x", condition.getX());
+                            config.set(basePath + ".condition.y", condition.getY());
+                            config.set(basePath + ".condition.z", condition.getZ());
+                            config.set(basePath + ".condition.click-type", condition.getClickType().name().toLowerCase(Locale.ROOT));
                             break;
                         case TIMER:
                             config.set(basePath + ".condition.time", condition.getTime());
@@ -368,6 +399,12 @@ public class DungeonManager {
                                 config.set(basePath + ".condition.y", condition.getY());
                                 config.set(basePath + ".condition.z", condition.getZ());
                                 config.set(basePath + ".condition.radius", condition.getRadius());
+                                break;
+                            case BLOCK_INTERACT:
+                                config.set(basePath + ".condition.x", condition.getX());
+                                config.set(basePath + ".condition.y", condition.getY());
+                                config.set(basePath + ".condition.z", condition.getZ());
+                                config.set(basePath + ".condition.click-type", condition.getClickType().name().toLowerCase(Locale.ROOT));
                                 break;
                             case TIMER:
                                 config.set(basePath + ".condition.time", condition.getTime());

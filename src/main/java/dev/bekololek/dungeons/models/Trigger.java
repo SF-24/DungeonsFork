@@ -1,5 +1,6 @@
 package dev.bekololek.dungeons.models;
 
+import dev.bekololek.dungeons.utils.ClickType;
 import org.bukkit.Location;
 import org.bukkit.entity.EntityType;
 import org.bukkit.potion.PotionEffectType;
@@ -68,6 +69,7 @@ public class Trigger {
     public void setQuestId(String questId) { if (condition != null) condition.setQuestId(questId); }
     public EntityType getMobType() { return condition != null ? condition.getMobType() : null; }
     public void setMobType(EntityType mobType) { if (condition != null) condition.setMobType(mobType); }
+    public void setClickType(ClickType clickType) { if (condition != null) condition.setClickType(clickType); }
     public int getKillCount() { return condition != null ? condition.getMobCount() : 0; }
     public void setKillCount(int count) { if (condition != null) condition.setMobCount(count); }
     public String getBossId() { return condition != null ? condition.getBossId() : null; }
@@ -80,6 +82,7 @@ public class Trigger {
 
     public enum TriggerType {
         LOCATION,
+        BLOCK_INTERACT,
         TIMER,
         MOB_KILL,
         QUEST_COMPLETE,
@@ -96,6 +99,7 @@ public class Trigger {
         private EntityType mobType;
         private String questId;
         private String bossId;
+        private ClickType clickType;
 
         private TriggerCondition(TriggerType type) {
             this.type = type;
@@ -104,6 +108,12 @@ public class Trigger {
         public static TriggerCondition location(double x, double y, double z, double radius) {
             TriggerCondition condition = new TriggerCondition(TriggerType.LOCATION);
             condition.x = x; condition.y = y; condition.z = z; condition.radius = radius;
+            return condition;
+        }
+
+        public static TriggerCondition interact(double x, double y, double z, ClickType clickType) {
+            TriggerCondition condition = new TriggerCondition(TriggerType.BLOCK_INTERACT);
+            condition.x = x; condition.y = y; condition.z = z; condition.clickType=clickType;
             return condition;
         }
 
@@ -139,6 +149,7 @@ public class Trigger {
         public int getTime() { return time; }
         public int getMobCount() { return mobCount; }
         public String getQuestId() { return questId; }
+        public ClickType getClickType() { return clickType; }
         public String getBossId() { return bossId; }
         public EntityType getMobType() { return mobType; }
 
@@ -150,6 +161,7 @@ public class Trigger {
         public void setMobCount(int mobCount) { this.mobCount = mobCount; }
         public void setMobType(EntityType mobType) { this.mobType = mobType; }
         public void setQuestId(String questId) { this.questId = questId; }
+        public void setClickType(ClickType clickType) { this.clickType = clickType; }
         public void setBossId(String bossId) { this.bossId = bossId; }
 
         public boolean isLocationInRange(Location location, Location dungeonOrigin) {
@@ -165,6 +177,20 @@ public class Trigger {
             double distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
 
             return distance <= radius;
+        }
+
+        public boolean isExactLocation(Location location, Location dungeonOrigin) {
+            if (type != TriggerType.LOCATION) return false;
+
+            int triggerX = (int) (dungeonOrigin.getX() + x);
+            int triggerY = (int) (dungeonOrigin.getY() + y);
+            int triggerZ = (int) (dungeonOrigin.getZ() + z);
+
+            int dx = (int) (location.getX() - triggerX);
+            int dy = (int) (location.getY() - triggerY);
+            int dz = (int) (location.getZ() - triggerZ);
+
+            return dx==triggerX && dy==triggerY && dz==triggerZ;
         }
     }
 
@@ -197,6 +223,13 @@ public class Trigger {
 
         public static TriggerAction spawnCustomMob(String customMobId, int count, double x, double y, double z) {
             TriggerAction action = new TriggerAction(ActionType.SPAWN_MOB);
+            action.customMobId = customMobId; action.mobCount = count;
+            action.spawnX = x; action.spawnY = y; action.spawnZ = z;
+            return action;
+        }
+
+        public static TriggerAction spawnMythicMob(String customMobId, int count, double x, double y, double z) {
+            TriggerAction action = new TriggerAction(ActionType.SPAWN_MYTHIC_MOB);
             action.customMobId = customMobId; action.mobCount = count;
             action.spawnX = x; action.spawnY = y; action.spawnZ = z;
             return action;
@@ -297,6 +330,7 @@ public class Trigger {
 
         public enum ActionType {
             SPAWN_MOB,
+            SPAWN_MYTHIC_MOB,
             DROP_ITEM,
             DAMAGE_PLAYER,
             MESSAGE,
@@ -322,6 +356,12 @@ public class Trigger {
         public Builder location(double x, double y, double z, double radius) {
             this.type = TriggerType.LOCATION;
             this.condition = TriggerCondition.location(x, y, z, radius);
+            return this;
+        }
+
+        public Builder interact(double x, double y, double z, ClickType clickType) {
+            this.type = TriggerType.LOCATION;
+            this.condition = TriggerCondition.interact(x, y, z,clickType);
             return this;
         }
 

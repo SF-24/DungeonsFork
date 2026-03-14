@@ -5,13 +5,14 @@ import dev.bekololek.dungeons.models.DungeonInstance;
 import dev.bekololek.dungeons.models.Quest;
 import dev.bekololek.dungeons.models.QuestObjective;
 import dev.bekololek.dungeons.models.QuestProgress;
+import dev.bekololek.dungeons.utils.ClickType;
 import dev.bekololek.dungeons.utils.MessageUtil;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -199,6 +200,13 @@ public class DungeonListener implements Listener {
         UUID playerId = player.getUniqueId();
         DungeonInstance instance = plugin.getInstanceManager().getPlayerInstance(playerId);
         if (instance == null || !instance.isActive()) return;
+
+        // Check BLOCK_INTERACT trigger, parsing the click type.
+        if(event.getAction().isRightClick()) {
+            plugin.getTriggerManager().checkBlockInteractTriggers(instance, player, event.getClickedBlock().getLocation(),ClickType.RIGHT_CLICK);
+        } else if(event.getAction().isLeftClick()) {
+            plugin.getTriggerManager().checkBlockInteractTriggers(instance, player, event.getClickedBlock().getLocation(),ClickType.LEFT_CLICK);
+        }
 
         // Check INTERACT_BLOCKS quests
         for (QuestProgress progress : instance.getAllQuestProgress()) {

@@ -3,6 +3,7 @@ package dev.bekololek.dungeons.commands;
 import com.sk89q.worldedit.extent.clipboard.Clipboard;
 import dev.bekololek.dungeons.Main;
 import dev.bekololek.dungeons.models.*;
+import dev.bekololek.dungeons.utils.ClickType;
 import dev.bekololek.dungeons.utils.ColorUtil;
 import dev.bekololek.dungeons.utils.MessageUtil;
 import net.kyori.adventure.text.Component;
@@ -1015,6 +1016,18 @@ public class DungeonEditorCommand implements CommandExecutor, TabCompleter {
                     trigger.setTriggerZ(Double.parseDouble(value));
                     MessageUtil.sendRaw(player, "&aSet trigger Z to: &e" + value);
                     break;
+                case "click_type":
+                    try {
+                        trigger.setClickType(ClickType.valueOf(value.toUpperCase(Locale.ROOT)));
+                        MessageUtil.sendRaw(player, "&aSet click type to: &e" + value);
+                    } catch (IllegalArgumentException ignored) {
+                        MessageUtil.sendRaw(player, "&aInvalid click type. Use:");
+                        for(ClickType type : ClickType.values()) {
+                            MessageUtil.sendRaw(player, type.name().toLowerCase());
+
+                        }
+                    }
+                    break;
                 case "radius":
                     trigger.setTriggerRadius(Double.parseDouble(value));
                     MessageUtil.sendRaw(player, "&aSet trigger radius to: &e" + value);
@@ -1074,6 +1087,9 @@ public class DungeonEditorCommand implements CommandExecutor, TabCompleter {
                     player.sendMessage(Component.text("  X: " + condition.getX() + " Y: " + condition.getY() + " Z: " + condition.getZ(), NamedTextColor.WHITE));
                     player.sendMessage(Component.text("  Radius: " + condition.getRadius(), NamedTextColor.WHITE));
                     break;
+                case BLOCK_INTERACT:
+                    player.sendMessage(Component.text("  X: " + condition.getX() + " Y: " + condition.getY() + " Z: " + condition.getZ() + " Click Type: " + condition.getClickType(), NamedTextColor.WHITE));
+                    break;
                 case TIMER:
                     player.sendMessage(Component.text("  Time: " + condition.getTime() + "s", NamedTextColor.WHITE));
                     break;
@@ -1122,7 +1138,7 @@ public class DungeonEditorCommand implements CommandExecutor, TabCompleter {
         // /dng trigger add <trigger_id> <action_type> [params...]
         if (args.length < 4) {
             MessageUtil.sendRaw(player, "&cUsage: /" + label + " trigger add <trigger_id> <action_type> [params...]");
-            MessageUtil.sendRaw(player, "&7Action types: SPAWN_MOB, DROP_ITEM, DAMAGE_PLAYER, MESSAGE, COMMAND, TELEPORT, POTION_EFFECT");
+            MessageUtil.sendRaw(player, "&7Action types: SPAWN_MOB, SPAWN_MYTHIC_MOB, DROP_ITEM, DAMAGE_PLAYER, MESSAGE, COMMAND, TELEPORT, POTION_EFFECT");
             return;
         }
 
@@ -1153,6 +1169,19 @@ public class DungeonEditorCommand implements CommandExecutor, TabCompleter {
                     double sy = Double.parseDouble(args[7]);
                     double sz = Double.parseDouble(args[8]);
                     action = Trigger.TriggerAction.spawnMob(mobType, count, sx, sy, sz);
+                    break;
+                case SPAWN_MYTHIC_MOB:
+                    // /dng trigger add <id> SPAWN_MYTHIC_MOB <mob_type> <count> <x> <y> <z>
+                    if (args.length < 9) {
+                        MessageUtil.sendRaw(player, "&cUsage: /" + label + " trigger add <id> SPAWN_MYTHIC_MOB <mob_type> <count> <x> <y> <z>");
+                        return;
+                    }
+                    String mythicMob = args[4];
+                    int amount = Integer.parseInt(args[5]);
+                    double d_x = Double.parseDouble(args[6]);
+                    double d_y = Double.parseDouble(args[7]);
+                    double d_z = Double.parseDouble(args[8]);
+                    action = Trigger.TriggerAction.spawnMythicMob(mythicMob, amount, d_x,d_y,d_z);
                     break;
                 case DROP_ITEM:
                     // /dng trigger add <id> DROP_ITEM <material> <amount> <x> <y> <z>
@@ -1564,6 +1593,7 @@ public class DungeonEditorCommand implements CommandExecutor, TabCompleter {
                     for (EntityType t : EntityType.values()) {
                         if (t.isAlive()) completions.add(t.name());
                     }
+
                 } else if (actionType.equals("DROP_ITEM")) {
                     for (Material m : Material.values()) {
                         if (m.isItem()) completions.add(m.name());

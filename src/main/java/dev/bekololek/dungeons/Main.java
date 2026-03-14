@@ -1,13 +1,12 @@
 package dev.bekololek.dungeons;
 
+import com.mineshaft.mineshaftapi.dependency.mythic_mob.MythicMobManager;
 import dev.bekololek.dungeons.commands.DungeonAdminCommand;
 import dev.bekololek.dungeons.commands.DungeonCommand;
 import dev.bekololek.dungeons.commands.DungeonEditorCommand;
 import dev.bekololek.dungeons.commands.PartyCommand;
 import dev.bekololek.dungeons.database.DatabaseManager;
-import dev.bekololek.dungeons.integrations.VaultEconomyIntegration;
-import dev.bekololek.dungeons.integrations.WorldEditIntegration;
-import dev.bekololek.dungeons.integrations.WorldGuardIntegration;
+import dev.bekololek.dungeons.integrations.*;
 import dev.bekololek.dungeons.listeners.DungeonListener;
 import dev.bekololek.dungeons.managers.*;
 import dev.bekololek.dungeons.stats.DungeonsExpansion;
@@ -32,6 +31,8 @@ public class Main extends JavaPlugin {
     private VaultEconomyIntegration vaultEconomy;
     private WorldEditIntegration worldEditIntegration;
     private WorldGuardIntegration worldGuardIntegration;
+    private MythicMobsIntegration mythicMobsIntegration;
+    private BetonQuestIntegration betonQuestIntegration;
 
     @Override
     public void onEnable() {
@@ -53,6 +54,16 @@ public class Main extends JavaPlugin {
         vaultEconomy = new VaultEconomyIntegration(this);
         if (getConfig().getBoolean("economy.enabled", true)) {
             vaultEconomy.initialize();
+        }
+
+        mythicMobsIntegration = new MythicMobsIntegration(this);
+        if (this.getServer().getPluginManager().getPlugin("MythicMobs") != null) {
+            mythicMobsIntegration.initialize();
+        }
+
+        betonQuestIntegration = new BetonQuestIntegration(this);
+        if (this.getServer().getPluginManager().getPlugin("BetonQuest") != null) {
+            betonQuestIntegration.initialize();
         }
 
         worldEditIntegration = new WorldEditIntegration(this);
@@ -152,6 +163,8 @@ public class Main extends JavaPlugin {
     public CustomMobManager getCustomMobManager() { return customMobManager; }
     public StatsManager getStatsManager() { return statsManager; }
     public VaultEconomyIntegration getVaultEconomy() { return vaultEconomy; }
+    public MythicMobsIntegration getMythicMobsIntegration() { return mythicMobsIntegration; }
+    public BetonQuestIntegration getBetonQuestIntegration() {return betonQuestIntegration;}
     public WorldEditIntegration getWorldEditIntegration() { return worldEditIntegration; }
     public WorldGuardIntegration getWorldGuardIntegration() { return worldGuardIntegration; }
 }

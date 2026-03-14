@@ -58,34 +58,34 @@ A Minecraft Paper plugin for grid-based multiplayer dungeon instances with party
 
 ### Editor Commands (`/dng`)
 
-| Command | Description |
-|---------|-------------|
-| `/dng create <id>` | Create a new dungeon |
-| `/dng edit <id>` | Edit existing dungeon |
-| `/dng save` / `cancel` | Save or discard changes |
-| `/dng set <property> <value>` | Set dungeon properties |
-| `/dng add quest\|reward\|trigger` | Add quest/reward/trigger |
-| `/dng quest`, `/dng reward`, `/dng trigger` | Manage sub-elements |
-| `/dng mobs create\|edit\|remove\|list` | Custom mob management |
-| `/dng schematic paste\|confirm\|pos1\|pos2\|save` | Schematic operations |
+| Command                                           | Description              |
+|---------------------------------------------------|--------------------------|
+| `/dng create <id>`                                | Create a new dungeon     |
+| `/dng edit <id>`                                  | Edit existing dungeon    |
+| `/dng save` / `cancel`                            | Save or discard changes  |
+| `/dng set <property> <value>`                     | Set dungeon properties   |
+| `/dng add quest\|reward\|trigger`                 | Add quest/reward/trigger |
+| `/dng quest`, `/dng reward`, `/dng trigger`       | Manage sub-elements      |
+| `/dng mobs create\|edit\|remove\|list`            | Custom mob management    |
+| `/dng schematic paste\|confirm\|pos1\|pos2\|save` | Schematic operations     |
 
 ## Permissions
 
-| Permission | Description | Default |
-|------------|-------------|---------|
-| `dungeons.enter` | Enter any dungeon | Everyone |
-| `dungeons.enter.<id>` | Enter a specific dungeon | Everyone |
-| `dungeons.party` | Use party commands | Everyone |
-| `dungeons.editor` | In-game dungeon editor | OP |
-| `dungeons.admin` | Admin commands | OP |
-| `dungeons.admin.reload` | Reload configuration | OP |
-| `dungeons.admin.reset` | Reset player/dungeon data | OP |
-| `dungeons.admin.teleport` | Teleport to instances | OP |
-| `dungeons.bypass.cooldown` | Bypass dungeon cooldowns | OP |
-| `dungeons.bypass.party-size` | Bypass party size limits | OP |
-| `dungeons.bypass.time-limit` | Ignore time limits | OP |
-| `dungeons.stats` | View own statistics | Everyone |
-| `dungeons.stats.others` | View other players' stats | OP |
+| Permission                   | Description               | Default  |
+|------------------------------|---------------------------|----------|
+| `dungeons.enter`             | Enter any dungeon         | Everyone |
+| `dungeons.enter.<id>`        | Enter a specific dungeon  | Everyone |
+| `dungeons.party`             | Use party commands        | Everyone |
+| `dungeons.editor`            | In-game dungeon editor    | OP       |
+| `dungeons.admin`             | Admin commands            | OP       |
+| `dungeons.admin.reload`      | Reload configuration      | OP       |
+| `dungeons.admin.reset`       | Reset player/dungeon data | OP       |
+| `dungeons.admin.teleport`    | Teleport to instances     | OP       |
+| `dungeons.bypass.cooldown`   | Bypass dungeon cooldowns  | OP       |
+| `dungeons.bypass.party-size` | Bypass party size limits  | OP       |
+| `dungeons.bypass.time-limit` | Ignore time limits        | OP       |
+| `dungeons.stats`             | View own statistics       | Everyone |
+| `dungeons.stats.others`      | View other players' stats | OP       |
 
 ## Configuration
 
@@ -140,37 +140,37 @@ database:
 
 ## Quest Types
 
-| Type | Description |
-|------|-------------|
-| `KILL_MOBS` | Kill a number of mobs |
-| `KILL_BOSS` | Kill a boss mob |
-| `COLLECT_ITEMS` | Collect specific items |
-| `REACH_LOCATION` | Reach a target area |
-| `SURVIVE_TIME` | Survive for a duration |
+| Type              | Description                   |
+|-------------------|-------------------------------|
+| `KILL_MOBS`       | Kill a number of mobs         |
+| `KILL_BOSS`       | Kill a boss mob               |
+| `COLLECT_ITEMS`   | Collect specific items        |
+| `REACH_LOCATION`  | Reach a target area           |
+| `SURVIVE_TIME`    | Survive for a duration        |
 | `INTERACT_BLOCKS` | Interact with specific blocks |
 
 ## Trigger Types
 
-| Trigger | Actions |
-|---------|---------|
-| `LOCATION` | Fired when player enters area |
-| `TIMER` | Fired after elapsed time |
-| `MOB_KILL` | Fired on mob death |
-| `QUEST_COMPLETE` | Fired on quest completion |
-| `PLAYER_DEATH` | Fired when player dies |
-| `BOSS_KILL` | Fired on boss death |
+| Trigger          | Actions                       |
+|------------------|-------------------------------|
+| `LOCATION`       | Fired when player enters area |
+| `TIMER`          | Fired after elapsed time      |
+| `MOB_KILL`       | Fired on mob death            |
+| `QUEST_COMPLETE` | Fired on quest completion     |
+| `PLAYER_DEATH`   | Fired when player dies        |
+| `BOSS_KILL`      | Fired on boss death           |
 
-Available actions: `SPAWN_MOB`, `DROP_ITEM`, `TELEPORT`, `DAMAGE_PLAYER`, `MESSAGE`, `COMMAND`, `POTION_EFFECT`.
+Available actions: `SPAWN_MOB`, `SPAWN_MYTHIC_MOB`, `DROP_ITEM`, `TELEPORT`, `DAMAGE_PLAYER`, `MESSAGE`, `COMMAND`, `POTION_EFFECT`.
 
 ## Dependencies
 
-| Dependency | Required |
-|------------|----------|
-| [VersionAdapter](https://github.com/BekoLolek/VersionAdapter) | Yes |
-| [WorldEdit](https://enginehub.org/worldedit) | No (required for schematics) |
-| [WorldGuard](https://enginehub.org/worldguard) | No (required for region protection) |
-| [Vault](https://www.spigotmc.org/resources/vault.34315/) | No (required for economy) |
-| [PlaceholderAPI](https://www.spigotmc.org/resources/placeholderapi.6245/) | No |
+| Dependency                                                                      | Required                            |
+|---------------------------------------------------------------------------------|-------------------------------------|
+| [VersionAdapter](https://github.com/BekoLolek/VersionAdapter)                   | Yes                                 |
+| [WorldEdit](https://enginehub.org/worldedit)                                    | No (required for schematics)        |
+| [WorldGuard](https://enginehub.org/worldguard)                                  | No (required for region protection) |
+| [Vault](https://www.spigotmc.org/resources/vault.34315/)                        | No (required for economy)           |
+| [PlaceholderAPI](https://www.spigotmc.org/resources/placeholderapi.6245/)       | No                                  |
 
 ## Installation
 
